@@ -1,0 +1,8 @@
+C:\Proyecto2\ProyectoProgra2\bin\Debug\ProyectoProgra2.exe.config
+C:\Proyecto2\ProyectoProgra2\bin\Debug\ProyectoProgra2.exe
+C:\Proyecto2\ProyectoProgra2\bin\Debug\ProyectoProgra2.pdb
+C:\Proyecto2\ProyectoProgra2\obj\Debug\ProyectoProgra2.csproj.AssemblyReference.cache
+C:\Proyecto2\ProyectoProgra2\obj\Debug\ProyectoProgra2.csproj.SuggestedBindingRedirects.cache
+C:\Proyecto2\ProyectoProgra2\obj\Debug\ProyectoProgra2.csproj.CoreCompileInputs.cache
+C:\Proyecto2\ProyectoProgra2\obj\Debug\ProyectoProgra2.exe
+C:\Proyecto2\ProyectoProgra2\obj\Debug\ProyectoProgra2.pdb
