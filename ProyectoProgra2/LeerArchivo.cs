@@ -7,9 +7,10 @@ namespace ProyectoProgra2
     public class LeerArchivo
     {
         private string _ruta;
-        private List<string> nombres = new List<string>();
         private List<string> cedulas = new List<string>();
+        private List<string> nombres = new List<string>();
         private List<string> correos = new List<string>();
+        private List<string> salarios = new List<string>();
 
         public LeerArchivo(string rutaNueva)
         {
@@ -27,7 +28,7 @@ namespace ProyectoProgra2
                 lector.Close();
             }
         }
-
+   
         public void AgregarEmpleado(string empleado)
         {
             using (StreamWriter lector = new StreamWriter(_ruta, true))
@@ -36,8 +37,9 @@ namespace ProyectoProgra2
                 lector.Close();
             }
         }
-
-        public void crearArchivo(string datos, string ruta) {
+       
+        public void crearArchivo(string datos, string ruta)
+        {
             using (StreamWriter lector = new StreamWriter(ruta, false))
             {
                 lector.WriteLine(datos);
@@ -45,15 +47,17 @@ namespace ProyectoProgra2
             }
         }
 
-        public void CargarDatos(string ruta) {
+        public void CargarDatos(string ruta)
+        {
             using (StreamReader lector = new StreamReader(_ruta))
             {
                 while (lector.EndOfStream != true)
                 {
                     string str = lector.ReadLine();
                     string[] lista = str.Split(' ');
-                    cedulas.Add(lista[0]);
-                    nombres.Add(lista[1]);
+                    cedulas.Add(lector.ReadLine());
+                    nombres.Add(lector.ReadLine());
+                    correos.Add(lector.ReadLine());
                 }
                 foreach (var emple in cedulas)
                 {
