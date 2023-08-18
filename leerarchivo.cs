@@ -6,7 +6,7 @@ namespace practicabuscarporid.files
 {
     internal class LeerArchivo
     {
-        // Almacena la ruta del archivo a leer
+        // Almacena la ruta del archivo a leer (nombres.txt)
         private string _path;
 
         // Lista para almacenar las líneas leídas del archivo
