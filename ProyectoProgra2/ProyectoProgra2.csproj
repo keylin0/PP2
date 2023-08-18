@@ -54,6 +54,7 @@
   <ItemGroup>
     <Content Include="archivos\Empleado.txt" />
     <Content Include="archivos\Planilla.txt" />
+    <Content Include="archivos\Plantilla_del_mes.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

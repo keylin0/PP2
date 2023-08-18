@@ -52,8 +52,6 @@ namespace ProyectoProgra2
         {
             int bruto = calcularSalarioBruto(salarioHora, horasTrabajo);
             double rebajoTotal = bruto * (double.Parse(rebajo) / 100.0);
-            Console.WriteLine(bruto);
-            Console.WriteLine(rebajoTotal);
             return bruto - rebajoTotal;
         }
 
@@ -116,6 +114,7 @@ namespace ProyectoProgra2
             }
             return rebajo;
         }
+
         public List<string> cargarNombre()
         {
             List<string> nombres = new List<string>();
@@ -130,5 +129,6 @@ namespace ProyectoProgra2
             }
             return nombres;
         }
+
     }
 }
