@@ -41,23 +41,37 @@ namespace ProyectoProgra2
                                   "2. Buscar salario por ID\n" +
                                   "3. Salir\n" +
                                   "Elija una opcion: \n";
-            string menuSalarioID = "Elija una opcion: \n" +
+            string menuSalario = "Elija una opcion: \n" +
                                    "1. Imprimir \n" +
                                    "2. Salir \n";
+            string menuSalarioID = "1. Intentar de nuevo\n" +
+                                   "2. Salir";
 
-            int opcionMenuSalarioID = 0;//Declaramos variables de tipo int y bool que se utilizaran para manejar las opciones del menu
+            //Declaramos variables de tipo int y bool que se utilizaran para manejar las opciones del menu
             int opcionMenuPrincipal = 0;
             int opcionMenuEmpleado = 0;
             int opcionMenuSalario = 0;
             int opcionMenuPlanilla = 0;
+            int opcionSubMenuSalario = 0;
+            int opcionSubMenuSalarioSalir = 0;
             bool validaMenuPrincipal = false; //Declaramos variables de tipo bool
             bool validaMenuEmpleado = false;
             bool validaMenuSalario = false;
             bool validaMenuPlanilla = false;
-            bool validaMenuSalarioID = false;
+            bool validaSubMenuSalario = false;
+            bool validaSubMenuSalarioSalir = false;
+            bool validaSalir = true;
 
             while (opcionMenuPrincipal != 3) //Abrimos un while que se ejecutara hasta que sea diferente a 3, es decir hasta que se cumpla el bucle dejara de repetirse
             {
+                validaMenuPrincipal = false; //Declaramos variables de tipo bool
+                validaMenuEmpleado = false;
+                validaMenuSalario = false;
+                validaMenuPlanilla = false;
+                validaSubMenuSalario = false;
+                validaSubMenuSalarioSalir = false;
+                validaSalir = true;
+                Console.Clear();
                 Console.WriteLine(menuPrincipal); //mostramos el menu principal
                 validaMenuPrincipal = int.TryParse(Console.ReadLine(), out opcionMenuPrincipal); // Este es un metodo que intenta convertir una cadena en un numero entero
                 // menu principal
@@ -76,76 +90,154 @@ namespace ProyectoProgra2
                                 {
                                     if (validaMenuSalario)
                                     {
-                                        if (opcionMenuSalario == 1)
+                                        if (opcionMenuSalario >= 1 & opcionMenuSalario <= 3)
                                         {
-                                            Console.Clear(); //Limpiamos y cargamos los datos de los diferentes listas creadas en la clase LeerArchivo para mostrar los salarios
-                                            cedulas = archivoPlanilla.cargarCedula();
-                                            salarioHora = archivoPlanilla.cargarSalarioHora();
-                                            horasTrabajadas = archivoPlanilla.cargarHorasTrabajadas();
-                                            rebajo = archivoPlanilla.cargarRebajo();
-                                            nombres = archivoEmpleado.cargarNombre();
-                                            string plantillaMes = "";
-
-                                            for (int i = 0; i < cedulas.Count; i++) //Abrimos un for que realiza operaciones en cada iteración para crear una cadena
+                                            if (opcionMenuSalario == 1)
                                             {
-                                                Console.Clear();
-                                                plantillaMes = nombres[i] + " " + horasTrabajadas[i] + " " + salarioHora[i] + " " + rebajo[i] + //La variable i se usa como un indice para acceder a los elementos en las otras listas
-                                                    " " + archivoPlanilla.calcularSalarioBruto(salarioHora[i], horasTrabajadas[i]) + " "
-                                                    + archivoPlanilla.calcularSalarioNeto(salarioHora[i], horasTrabajadas[i], rebajo[i]);
-                                                archivoPlantillaMes.GuardarDato(plantillaMes); // Luego esa cadena se guardara en un nuevo archivo el cual seria plantilla del mes
-                                                Console.WriteLine(plantillaMes);
-                                            }
-                                            Console.WriteLine();
-                                            Console.ReadLine(); //Esperamos que el usuario precione una tecla para continuar
-                                        }
-                                        else if (opcionMenuSalario == 2) //Ahora buscaremos el salario por ID
-                                        {
-                                            Console.Clear();
-                                            cedulas = archivoPlanilla.cargarCedula();
-                                            salarioHora = archivoPlanilla.cargarSalarioHora();
-                                            horasTrabajadas = archivoPlanilla.cargarHorasTrabajadas();
-                                            rebajo = archivoPlanilla.cargarRebajo();
-                                            nombres = archivoEmpleado.cargarNombre();
-                                            Console.WriteLine("Digite el ID que desea encontrar: ");
-                                            String ID = Console.ReadLine();
+                                                Console.Clear(); //Limpiamos y cargamos los datos de los diferentes listas creadas en la clase LeerArchivo para mostrar los salarios
+                                                cedulas = archivoPlanilla.cargarCedula();
+                                                salarioHora = archivoPlanilla.cargarSalarioHora();
+                                                horasTrabajadas = archivoPlanilla.cargarHorasTrabajadas();
+                                                rebajo = archivoPlanilla.cargarRebajo();
+                                                nombres = archivoEmpleado.cargarNombre();
+                                                string plantillaMes = "";
 
-                                            string idEncontrada = cedulas.Find(dato => dato == ID);
-                                            string datoSalarioEmpleado = "";
-                                            if (idEncontrada != null)
-                                            {
-                                                Console.WriteLine(menuSalarioID);
-                                                validaMenuSalarioID = int.TryParse(Console.ReadLine(), out opcionMenuSalarioID);
-                                                if (validaMenuSalarioID)
+                                                for (int i = 0; i < cedulas.Count; i++) //Abrimos un for que realiza operaciones en cada iteración para crear una cadena
                                                 {
-                                                    if (opcionMenuSalarioID == 1)
+                                                    plantillaMes = nombres[i] + " " + horasTrabajadas[i] + " " + salarioHora[i] + " " + rebajo[i] + //La variable i se usa como un indice para acceder a los elementos en las otras listas
+                                                        " " + archivoPlanilla.calcularSalarioBruto(salarioHora[i], horasTrabajadas[i]) + " "
+                                                        + archivoPlanilla.calcularSalarioNeto(salarioHora[i], horasTrabajadas[i], rebajo[i]);
+                                                    Console.WriteLine(plantillaMes);
+                                                }
+
+                                                Console.WriteLine(menuSalario);
+                                                validaSubMenuSalario = int.TryParse(Console.ReadLine(), out opcionSubMenuSalario);
+                                                do
+                                                {
+                                                    if (validaSubMenuSalario)
                                                     {
-                                                        for (int i = 0; i < cedulas.Count; i++) //Abrimos un for que realiza operaciones en cada iteración para crear una cadena
+                                                        if (opcionSubMenuSalario >= 1 & opcionSubMenuSalario <= 2)
                                                         {
-                                                            if (idEncontrada == cedulas[i])
+                                                            if (opcionSubMenuSalario == 1)
                                                             {
-                                                                datoSalarioEmpleado = nombres[i] + " " + horasTrabajadas[i] + " " + salarioHora[i] + " " + rebajo[i] + //La variable i se usa como un indice para acceder a los elementos en las otras listas
-                                                                    " " + archivoPlanilla.calcularSalarioBruto(salarioHora[i], horasTrabajadas[i]) + " "
-                                                                    + archivoPlanilla.calcularSalarioNeto(salarioHora[i], horasTrabajadas[i], rebajo[i]);
-                                                                archivoPlantillaMes.crearArchivo(datoSalarioEmpleado, rutaSalarioEmpleado + cedulas[i] + ".txt"); // Luego esa cadena se guardara en un nuevo archivo el cual seria plantilla del mes
-                                                                Console.WriteLine(datoSalarioEmpleado);
-                                                                Console.ReadLine();
+                                                                archivoPlantillaMes.GuardarDato(plantillaMes); //se guarda datos en planilla del mes
+                                                                archivoPlantillaMes.Leerdato();
+                                                                Console.WriteLine("Guardado con exito, presione cualquier tecla para continuar...");
                                                                 break;
                                                             }
                                                         }
+                                                        else
+                                                        {
+                                                            Console.WriteLine("Opcion invalida, intente nuevamente...");
+                                                            validaSubMenuSalario = int.TryParse(Console.ReadLine(), out opcionSubMenuSalario);
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        Console.WriteLine("Opcion invalida, intente nuevamente...");
+                                                        validaSubMenuSalario = int.TryParse(Console.ReadLine(), out opcionSubMenuSalario);
+                                                    }
+                                                } while (opcionSubMenuSalario != 2);
+                                                break;
+                                            }
+                                            else if (opcionMenuSalario == 2) //Ahora buscaremos el salario por ID
+                                            {
+                                                Console.Clear();
+                                                cedulas = archivoPlanilla.cargarCedula();
+                                                salarioHora = archivoPlanilla.cargarSalarioHora();
+                                                horasTrabajadas = archivoPlanilla.cargarHorasTrabajadas();
+                                                rebajo = archivoPlanilla.cargarRebajo();
+                                                nombres = archivoEmpleado.cargarNombre();
+                                                Console.WriteLine("Digite el ID que desea encontrar: ");
+                                                String ID = Console.ReadLine();
+
+                                                string idEncontrada = cedulas.Find(dato => dato == ID);
+                                                string datoSalarioEmpleado = "";
+                                                if (idEncontrada != null)
+                                                {
+                                                    Console.WriteLine(menuSalario);
+                                                    validaSubMenuSalario = int.TryParse(Console.ReadLine(), out opcionSubMenuSalario);
+                                                    do
+                                                    {
+                                                        if (validaSubMenuSalario)
+                                                        {
+                                                            if (opcionSubMenuSalario >= 1 & opcionSubMenuSalario <= 2)
+                                                            {
+                                                                if (opcionSubMenuSalario == 1)
+                                                                {
+                                                                    for (int i = 0; i < cedulas.Count; i++) //Abrimos un for que realiza operaciones en cada iteración para crear una cadena
+                                                                    {
+                                                                        if (idEncontrada == cedulas[i])
+                                                                        {
+                                                                            datoSalarioEmpleado = nombres[i] + " " + horasTrabajadas[i] + " " + salarioHora[i] + " " + rebajo[i] + //La variable i se usa como un indice para acceder a los elementos en las otras listas
+                                                                                " " + archivoPlanilla.calcularSalarioBruto(salarioHora[i], horasTrabajadas[i]) + " "
+                                                                                + archivoPlanilla.calcularSalarioNeto(salarioHora[i], horasTrabajadas[i], rebajo[i]);
+                                                                            archivoPlantillaMes.crearArchivo(datoSalarioEmpleado, rutaSalarioEmpleado + cedulas[i] + ".txt"); // Luego esa cadena se guardara en un nuevo archivo el cual seria plantilla del mes
+                                                                            Console.WriteLine(datoSalarioEmpleado);
+                                                                            Console.ReadLine();
+                                                                            break;
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                            else
+                                                            {
+                                                                Console.WriteLine("Opcion invalida, intente nuevamente...");
+                                                                validaSubMenuSalario = int.TryParse(Console.ReadLine(), out opcionSubMenuSalario);
+                                                            }
+                                                        }
+                                                        else
+                                                        {
+                                                            Console.WriteLine("Opcion invalida, intente nuevamente...");
+                                                            validaSubMenuSalario = int.TryParse(Console.ReadLine(), out opcionSubMenuSalario);
+                                                        }
+                                                    } while (opcionSubMenuSalario != 2);
+                                                    break;
+                                                }
+                                                else
+                                                {
+                                                    Console.WriteLine("No existe el id: " + ID);
+                                                    Console.WriteLine(menuSalarioID);
+                                                    validaSubMenuSalarioSalir = int.TryParse(Console.ReadLine(), out opcionSubMenuSalarioSalir);
+                                                    do
+                                                    {
+                                                        if (validaSubMenuSalarioSalir)
+                                                        {
+                                                            if (opcionSubMenuSalarioSalir >= 1 & opcionSubMenuSalarioSalir <= 2)
+                                                            {
+                                                                if (opcionSubMenuSalarioSalir == 1)
+                                                                {
+                                                                    break;
+                                                                }
+                                                                else if (opcionSubMenuSalarioSalir == 2)
+                                                                {
+                                                                    validaSalir = false;
+                                                                    break;
+                                                                }
+                                                            }
+                                                            else
+                                                            {
+                                                                Console.WriteLine("Opcion invalida, intente nuevamente...");
+                                                                validaSubMenuSalarioSalir = int.TryParse(Console.ReadLine(), out opcionSubMenuSalarioSalir);
+                                                            }
+                                                        }
+                                                        else
+                                                        {
+                                                            Console.WriteLine("Opcion invalida, intente nuevamente...");
+                                                            validaSubMenuSalarioSalir = int.TryParse(Console.ReadLine(), out opcionSubMenuSalarioSalir);
+                                                        }
+                                                    } while (opcionSubMenuSalarioSalir != 2);
+                                                    if (validaSalir == false)
+                                                    {
+                                                        break;
                                                     }
                                                 }
                                             }
-                                            else
-                                            {
-                                                Console.WriteLine("El ID no existe \n" +
-                                                                  "1. Intentar de nuevo\n" +
-                                                                  "2. Salir");
-                                                Console.ReadLine();
-                                            }
-                                            //if (idEncontrada ==  )
-                                            {
-                                                string rutaCedulaEmpleado = @"C:\Proyecto2\ProyectoProgra2\archivos\" + cedulas + "Numero_de_cedula.txt";
-                                            }
+                                        }
+                                        else
+                                        {
+                                            Console.WriteLine("Opcion invalida, intente nuevamente...");
+                                            validaMenuSalario = int.TryParse(Console.ReadLine(), out opcionMenuSalario);
                                         }
                                     }
                                     else
@@ -157,6 +249,7 @@ namespace ProyectoProgra2
                                         //Pero si falla e ingresa una letra en vez de numero se establece en falso
                                     }
                                 } while (opcionMenuSalario != 3); //Abrimos otro while para la segunda pantalla
+                                break;
                             }
                             else if (opcionMenuPrincipal == 2) //Si la primera opcion del menu fue 2 entonces
                             {
@@ -183,45 +276,74 @@ namespace ProyectoProgra2
                                 {
                                     if (validaMenuEmpleado)
                                     {
-                                        if (opcionMenuEmpleado == 1) //Si la persona le da a guardar se muestra la pantalla de planilla
+                                        if (opcionMenuEmpleado >= 1 & opcionMenuEmpleado <= 2)
                                         {
-                                            Console.Clear();
-                                            archivoEmpleado.GuardarDato(datoEmpleado); //Si la persona le dio guardar se guarda la informacion del empleado y llenara el de planilla
-                                            Console.WriteLine("presione cualquier tecla para continuar con la planilla...");
-                                            Console.ReadLine();
-                                            Console.Clear();
-                                            // menu planilla
-                                            string profesion = ""; //Declaramos variables tipo string para almacenar los datos de planilla
-                                            string horasTrabajada = "";
-                                            string salarioHoras = "";
-                                            string rebajos = "";
-                                            string datoPlanilla = "";
-                                            Console.WriteLine("Complete datos para planilla");
-                                            Console.Write("Profesion: ");
-                                            profesion = Console.ReadLine();
-                                            Console.Write("Salario hora: ");
-                                            salarioHoras = Console.ReadLine();
-                                            Console.Write("Horas trabajadas: ");
-                                            horasTrabajada = Console.ReadLine();
-                                            Console.Write("Rebajos: ");
-                                            rebajos = Console.ReadLine();
-                                            datoPlanilla = cedula + " " + profesion + " " + salarioHoras + " " + horasTrabajada + " " + rebajos; //Volvemos a concatenar los datos
-                                            Console.WriteLine(menuPlanilla); //Mostramos la opcion de guardar
-
-                                            Console.Clear(); //aLimpiamos
-
-                                            archivoPlanilla.GuardarDato(datoPlanilla); //Si la persona guardo, los nuevos datos se guardan en planilla
-                                            archivoPlanilla.Leerdato(); // Se leen los datos para que sean ingresados al archivo de planilla
-                                            Console.WriteLine("    ********************************************************************************************\n" +
-                                                              "Los datos han sido guardados correctamente, precione cualquier tecla para volver al menu principal\n");
-                                            Console.ReadKey(); //Mostramos un mensaje y se manda al menu
-                                            Console.Clear();
-                                            break;
+                                            if (opcionMenuEmpleado == 1) //Si la persona le da a guardar se muestra la pantalla de planilla
+                                            {
+                                                Console.Clear();
+                                                archivoEmpleado.GuardarDato(datoEmpleado); //Si la persona le dio guardar se guarda la informacion del empleado y llenara el de planilla
+                                                Console.WriteLine("presione cualquier tecla para continuar con la planilla...");
+                                                Console.ReadLine();
+                                                Console.Clear();
+                                                // menu planilla
+                                                string profesion = ""; //Declaramos variables tipo string para almacenar los datos de planilla
+                                                string horasTrabajada = "";
+                                                string salarioHoras = "";
+                                                string rebajos = "";
+                                                string datoPlanilla = "";
+                                                Console.WriteLine("Complete datos para planilla");
+                                                Console.Write("Profesion: ");
+                                                profesion = Console.ReadLine();
+                                                Console.Write("Salario hora: ");
+                                                salarioHoras = Console.ReadLine();
+                                                Console.Write("Horas trabajadas: ");
+                                                horasTrabajada = Console.ReadLine();
+                                                Console.Write("Rebajos: ");
+                                                rebajos = Console.ReadLine();
+                                                datoPlanilla = cedula + " " + profesion + " " + salarioHoras + " " + horasTrabajada + " " + rebajos; //Volvemos a concatenar los datos
+                                                Console.WriteLine(menuPlanilla); //Mostramos la opcion de guardar
+                                                validaMenuPlanilla = int.TryParse(Console.ReadLine(), out opcionMenuPlanilla);
+                                                do
+                                                {
+                                                    if (validaMenuPlanilla)
+                                                    {
+                                                        if (opcionMenuPlanilla >= 1 & opcionMenuPlanilla <= 2)
+                                                        {
+                                                            archivoPlanilla.GuardarDato(datoPlanilla); //Si la persona guardo, los nuevos datos se guardan en planilla
+                                                            archivoPlanilla.Leerdato(); // Se leen los datos para que sean ingresados al archivo de planilla
+                                                            Console.WriteLine("    ********************************************************************************************\n" +
+                                                                              "Los datos han sido guardados correctamente, precione cualquier tecla para volver al menu principal\n");
+                                                            Console.ReadKey(); //Mostramos un mensaje y se manda al menu
+                                                            break;
+                                                        }
+                                                        else
+                                                        {
+                                                            Console.WriteLine("Opcion invalida, intente nuevamente...");
+                                                            validaMenuPlanilla = int.TryParse(Console.ReadLine(), out opcionMenuPlanilla);
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        Console.WriteLine("Opcion invalida, intente nuevamente...");
+                                                        validaMenuPlanilla = int.TryParse(Console.ReadLine(), out opcionMenuPlanilla);
+                                                    }
+                                                } while (opcionMenuPlanilla != 2);
+                                                break;
+                                            }
+                                            else if (opcionMenuEmpleado == 2)
+                                            {
+                                                break;
+                                            }
+                                            else //Declaramos validaciones para todas las pantallas
+                                            {
+                                                Console.WriteLine("Opcion invalida, intente nuevamente...");
+                                                validaMenuEmpleado = int.TryParse(Console.ReadLine(), out opcionMenuEmpleado);
+                                            }
                                         }
-                                        else //Declaramos validaciones para todas las pantallas
+                                        else
                                         {
                                             Console.WriteLine("Opcion invalida, intente nuevamente...");
-                                            validaMenuPlanilla = int.TryParse(Console.ReadLine(), out opcionMenuPlanilla);
+                                            validaMenuEmpleado = int.TryParse(Console.ReadLine(), out opcionMenuEmpleado);
                                         }
                                     }
                                     else
