@@ -7,17 +7,22 @@ namespace ProyectoProgra2
     public class LeerArchivo
     {
         private string _ruta;
-        private List<string> cedulas = new List<string>();
-        private List<string> nombres = new List<string>();
-        private List<string> correos = new List<string>();
-        private List<string> salarios = new List<string>();
 
         public LeerArchivo(string rutaNueva)
         {
             _ruta = rutaNueva;
         }
 
-        public void LeerEmpleado()
+        public void crearArchivo(string datos, string ruta)
+        {
+            using (StreamWriter lector = new StreamWriter(ruta, false))
+            {
+                lector.WriteLine(datos);
+                lector.Close();
+            }
+        }
+
+        public void Leerdato()
         {
             using (StreamReader lector = new StreamReader(_ruta))
             {
@@ -28,43 +33,102 @@ namespace ProyectoProgra2
                 lector.Close();
             }
         }
-   
-        public void AgregarEmpleado(string empleado)
+
+        public void GuardarDato(string dato)
         {
             using (StreamWriter lector = new StreamWriter(_ruta, true))
             {
-                lector.WriteLine(empleado);
-                lector.Close();
-            }
-        }
-       
-        public void crearArchivo(string datos, string ruta)
-        {
-            using (StreamWriter lector = new StreamWriter(ruta, false))
-            {
-                lector.WriteLine(datos);
+                lector.WriteLine(dato);
                 lector.Close();
             }
         }
 
-        public void CargarDatos(string ruta)
+        public int calcularSalarioBruto(string salarioHora, string horasTrabajo)
         {
+            return int.Parse(salarioHora) * int.Parse(horasTrabajo);
+        }
+
+        public double calcularSalarioNeto(string salarioHora, string horasTrabajo, string rebajo)
+        {
+            int bruto = calcularSalarioBruto(salarioHora, horasTrabajo);
+            double rebajoTotal = bruto * (double.Parse(rebajo) / 100.0);
+            Console.WriteLine(bruto);
+            Console.WriteLine(rebajoTotal);
+            return bruto - rebajoTotal;
+        }
+
+        public List<string> cargarCedula()
+        {
+            List<string> cedulas = new List<string>();
             using (StreamReader lector = new StreamReader(_ruta))
             {
                 while (lector.EndOfStream != true)
                 {
                     string str = lector.ReadLine();
                     string[] lista = str.Split(' ');
-                    cedulas.Add(lector.ReadLine());
-                    nombres.Add(lector.ReadLine());
-                    correos.Add(lector.ReadLine());
+                    cedulas.Add(lista[0]);
                 }
-                foreach (var emple in cedulas)
-                {
-                    Console.WriteLine(emple);
-                }
-                lector.Close();
             }
+            return cedulas;
+        }
+
+        public List<string> cargarSalarioHora()
+        {
+            List<string> salarioHora = new List<string>();
+            using (StreamReader lector = new StreamReader(_ruta))
+            {
+                while (lector.EndOfStream != true)
+                {
+                    string str = lector.ReadLine();
+                    string[] lista = str.Split(' ');
+                    salarioHora.Add(lista[2]);
+                }
+            }
+            return salarioHora;
+        }
+
+        public List<string> cargarHorasTrabajadas()
+        {
+            List<string> horasTrabajadas = new List<string>();
+            using (StreamReader lector = new StreamReader(_ruta))
+            {
+                while (lector.EndOfStream != true)
+                {
+                    string str = lector.ReadLine();
+                    string[] lista = str.Split(' ');
+                    horasTrabajadas.Add(lista[3]);
+                }
+            }
+            return horasTrabajadas;
+        }
+
+        public List<string> cargarRebajo()
+        {
+            List<string> rebajo = new List<string>();
+            using (StreamReader lector = new StreamReader(_ruta))
+            {
+                while (lector.EndOfStream != true)
+                {
+                    string str = lector.ReadLine();
+                    string[] lista = str.Split(' ');
+                    rebajo.Add(lista[4]);
+                }
+            }
+            return rebajo;
+        }
+        public List<string> cargarNombre()
+        {
+            List<string> nombres = new List<string>();
+            using (StreamReader lector = new StreamReader(_ruta))
+            {
+                while (lector.EndOfStream != true)
+                {
+                    string str = lector.ReadLine();
+                    string[] lista = str.Split(' ');
+                    nombres.Add(lista[1]);
+                }
+            }
+            return nombres;
         }
     }
 }
