@@ -7,6 +7,7 @@ namespace ProyectoProgra2
     {
         private static void Main(string[] args)
         {
+            Console.OutputEncoding = System.Text.Encoding.UTF8;
             // Definimos las rutas de archivos que vamos a utilizar para manipular/utilizar los archivos
             string rutaEmpleado = @"C:\Proyecto2\ProyectoProgra2\archivos\Empleado.txt";
             string rutaPlanilla = @"C:\Proyecto2\ProyectoProgra2\archivos\Planilla.txt";
@@ -23,6 +24,8 @@ namespace ProyectoProgra2
             List<string> horasTrabajadas = new List<string>();
             List<string> rebajo = new List<string>();
             List<string> nombres = new List<string>();
+
+            Validaciones validar = new Validaciones();
 
             string menuPrincipal = " ***** Menu *****\n" + // Se crean los menus
                         "1 - Ver salarios\n" +
@@ -260,12 +263,9 @@ namespace ProyectoProgra2
                                 string correo = "";
                                 string datoEmpleado = "";
                                 Console.WriteLine("Complete los datos del empleado");
-                                Console.Write("Cedula: ");
-                                cedula = Console.ReadLine();
-                                Console.Write("Nombre y Apellidos: ");
-                                nombreCompleto = Console.ReadLine();
-                                Console.Write("Correo: ");
-                                correo = Console.ReadLine();
+                                cedula = validar.DatoNumerico("Cedula: ");
+                                nombreCompleto = validar.DatoCaracter("Nombre y Apellidos: ");
+                                correo = validar.PedirDatoNoVacio("Correo: ");
                                 datoEmpleado = cedula + " " + nombreCompleto + " " + correo; //Concatenamos las 3 variables para formar una cadena con la informacion
                                 Console.Clear();
                                 Console.Write("Desea guardar los siguientes datos: ");
@@ -292,14 +292,10 @@ namespace ProyectoProgra2
                                                 string rebajos = "";
                                                 string datoPlanilla = "";
                                                 Console.WriteLine("Complete datos para planilla");
-                                                Console.Write("Profesion: ");
-                                                profesion = Console.ReadLine();
-                                                Console.Write("Salario hora: ");
-                                                salarioHoras = Console.ReadLine();
-                                                Console.Write("Horas trabajadas: ");
-                                                horasTrabajada = Console.ReadLine();
-                                                Console.Write("Rebajos: ");
-                                                rebajos = Console.ReadLine();
+                                                profesion = validar.DatoCaracter("Profesion: ");
+                                                salarioHoras = validar.DatoNumerico("Salario hora: ");
+                                                horasTrabajada = validar.DatoNumerico("Horas trabajadas: ");
+                                                rebajos = validar.DatoNumerico("Rebajos: ");
                                                 datoPlanilla = cedula + " " + profesion + " " + salarioHoras + " " + horasTrabajada + " " + rebajos; //Volvemos a concatenar los datos
                                                 Console.WriteLine(menuPlanilla); //Mostramos la opcion de guardar
                                                 validaMenuPlanilla = int.TryParse(Console.ReadLine(), out opcionMenuPlanilla);
@@ -368,23 +364,6 @@ namespace ProyectoProgra2
                     }
                 } while (opcionMenuPrincipal != 3);
             }
-        }
-
-        private string DatoNoVacio(string campo) //Declaramos un metodo tipo string para evitar que el usuario de enter sin llenar los datos, es decir evitar un campo vacio
-        {
-            string dato;
-            do
-            {
-                Console.Write($"{campo}: ");
-                dato = Console.ReadLine();
-
-                if (string.IsNullOrWhiteSpace(dato))
-                {
-                    Console.WriteLine("El campo no puede estar vacío. Ingrese nuevamente.");
-                }
-            } while (string.IsNullOrWhiteSpace(dato));
-
-            return dato;
         }
     }
 }
